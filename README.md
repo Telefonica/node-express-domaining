@@ -24,6 +24,19 @@ app.use(expressDomain());
 app.listen(3000);
 ```
 
+By default, errors in domain are traced by `console.error`. However, you can use a custom logger:
+
+```js
+var express = require('express'),
+    expressDomain = require('express-domaining'),
+    logger = require('logops');
+
+var app = express();
+app.use(expressDomain(logger));
+
+app.listen(3000);
+```
+
 ## License
 
 Copyright 2015 [Telefónica Investigación y Desarrollo, S.A.U](http://www.tid.es)

@@ -41,7 +41,6 @@
     "eslint": "^0.23.0"
   },
   "dependencies": {
-    "logops": "^0.4.1"
   },
   "keywords": [
     "domain",
