@@ -2,6 +2,10 @@
 
 Express middleware to automatically create and destroy a [domain](https://nodejs.org/api/domain.html).
 
+[![npm version](https://badge.fury.io/js/express-domaining.svg)](http://badge.fury.io/js/express-domaining)
+[![Build Status](https://travis-ci.org/telefonica/node-express-domaining.svg)](https://travis-ci.org/telefonica/node-express-domaining)
+[![Coverage Status](https://img.shields.io/coveralls/telefonica/node-express-domaining.svg)](https://coveralls.io/r/telefonica/node-express-domaining)
+
 ## Installation
 
 ```bash
