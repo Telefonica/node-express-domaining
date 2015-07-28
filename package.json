@@ -1,7 +1,7 @@
 {
   "name": "express-domaining",
   "description": "Express middleware to create and destroy a node domain",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "Apache-2.0",
   "author": {
     "name": "Jorge Lorenzo Gallardo",
@@ -10,6 +10,7 @@
   "contributors": [
     "Juan Antonio Hernando Labajo <juanantonio.hernandolabajo@telefonica.com>",
     "Guido García Bernardo <guido.garciabernardo@telefonica.com>"
+    "David Lozano Llanos <david.lozanollanos@telefonica.com>"
   ],
   "repository": {
     "type": "git",
@@ -24,7 +25,7 @@
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R dot test/environment.js test/unit/*-test.js",
     "lint": "jscs lib && eslint lib",
     "prepublish": "npm run test && npm run lint",
-    "travis": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/environment.js test/*-test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "travis": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec test/environment.js test/unit/*-test.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "devDependencies": {
     "chai": "^3.0.0",
