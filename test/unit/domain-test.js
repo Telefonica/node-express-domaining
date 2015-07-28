@@ -24,6 +24,10 @@ describe('Domain Middleware Tests', function() {
     };
     this.exit = function() {
     };
+    this.add = function(emitter) {
+    };
+    this.remove = function(emitter) {
+    };
   }
   util.inherits(Domain, events.EventEmitter);
 
@@ -37,7 +41,9 @@ describe('Domain Middleware Tests', function() {
     var domainSpy = {
       enter: sinon.spy(domain, 'enter'),
       run: sinon.spy(domain, 'run'),
-      exit: sinon.spy(domain, 'exit')
+      exit: sinon.spy(domain, 'exit'),
+      add: sinon.spy(domain, 'add'),
+      remove: sinon.spy(domain, 'remove')
     };
 
     var DomainMiddleware = proxyquire('../../lib/domain', {
@@ -47,7 +53,11 @@ describe('Domain Middleware Tests', function() {
     domainMiddleware(req, res, function onNext() {
       expect(domainSpy.enter.calledOnce).to.be.true;
       expect(domainSpy.run.calledOnce).to.be.true;
+      expect(domainSpy.add.withArgs(req).calledOnce).to.be.true;
+      expect(domainSpy.add.withArgs(res).calledOnce).to.be.true;
       res.end();
+      expect(domainSpy.remove.withArgs(req).calledOnce).to.be.true;
+      expect(domainSpy.remove.withArgs(res).calledOnce).to.be.true;
       expect(domainSpy.exit.calledOnce).to.be.true;
       done();
     });
@@ -63,7 +73,9 @@ describe('Domain Middleware Tests', function() {
     var domainSpy = {
       enter: sinon.spy(domain, 'enter'),
       run: sinon.spy(domain, 'run'),
-      exit: sinon.spy(domain, 'exit')
+      exit: sinon.spy(domain, 'exit'),
+      add: sinon.spy(domain, 'add'),
+      remove: sinon.spy(domain, 'remove')
     };
 
     var DomainMiddleware = proxyquire('../../lib/domain', {
@@ -73,8 +85,12 @@ describe('Domain Middleware Tests', function() {
     domainMiddleware(req, res, function onNext() {
       expect(domainSpy.enter.calledOnce).to.be.true;
       expect(domainSpy.run.calledOnce).to.be.true;
+      expect(domainSpy.add.withArgs(req).calledOnce).to.be.true;
+      expect(domainSpy.add.withArgs(res).calledOnce).to.be.true;
       // Trigger error
       domain.emit('error', new Error('test error'));
+      expect(domainSpy.remove.withArgs(req).calledOnce).to.be.true;
+      expect(domainSpy.remove.withArgs(res).calledOnce).to.be.true;
       expect(domainSpy.exit.calledOnce).to.be.true;
       done();
     });
