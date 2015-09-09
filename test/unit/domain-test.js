@@ -56,8 +56,8 @@ describe('Domain Middleware Tests', function() {
       expect(domainSpy.add.withArgs(req).calledOnce).to.be.true;
       expect(domainSpy.add.withArgs(res).calledOnce).to.be.true;
       res.end();
-      expect(domainSpy.remove.withArgs(req).calledOnce).to.be.true;
-      expect(domainSpy.remove.withArgs(res).calledOnce).to.be.true;
+      expect(domainSpy.remove.withArgs(req).notCalled).to.be.true;
+      expect(domainSpy.remove.withArgs(res).notCalled).to.be.true;
       expect(domainSpy.exit.calledOnce).to.be.true;
       done();
     });
@@ -89,8 +89,8 @@ describe('Domain Middleware Tests', function() {
       expect(domainSpy.add.withArgs(res).calledOnce).to.be.true;
       // Trigger error
       domain.emit('error', new Error('test error'));
-      expect(domainSpy.remove.withArgs(req).calledOnce).to.be.true;
-      expect(domainSpy.remove.withArgs(res).calledOnce).to.be.true;
+      expect(domainSpy.remove.withArgs(req).notCalled).to.be.true;
+      expect(domainSpy.remove.withArgs(res).notCalled).to.be.true;
       expect(domainSpy.exit.calledOnce).to.be.true;
       done();
     });
