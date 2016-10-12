@@ -81,18 +81,34 @@ describe('Domain Middleware Tests', function() {
     var DomainMiddleware = proxyquire('../../lib/domain', {
       'domain': domainMock
     });
+
+    var unhandlerError = new Error('test error');
+    // get mocha exception handler
+    var originalException = process.listeners('uncaughtException').pop()
+    // and remove it
+    process.removeListener('uncaughtException', originalException);
+
     var domainMiddleware = new DomainMiddleware();
-    domainMiddleware(req, res, function onNext() {
+    domainMiddleware(req, res, function onNext(propagatedError) {
       expect(domainSpy.enter.calledOnce).to.be.true;
       expect(domainSpy.run.calledOnce).to.be.true;
       expect(domainSpy.add.withArgs(req).calledOnce).to.be.true;
       expect(domainSpy.add.withArgs(res).calledOnce).to.be.true;
+      
+      if (propagatedError) {
+        process.once('uncaughtException', function(err) {
+          // restore mocha error handler
+          process.listeners('uncaughtException').push(originalException)
+          expect(err).to.be.eql(unhandlerError)
+          expect(propagatedError).to.be.eql(unhandlerError)
+          expect(domainSpy.remove.withArgs(req).notCalled).to.be.true;
+          expect(domainSpy.remove.withArgs(res).notCalled).to.be.true;
+          expect(domainSpy.exit.calledOnce).to.be.true;
+          done();
+        });
+      }
       // Trigger error
-      domain.emit('error', new Error('test error'));
-      expect(domainSpy.remove.withArgs(req).notCalled).to.be.true;
-      expect(domainSpy.remove.withArgs(res).notCalled).to.be.true;
-      expect(domainSpy.exit.calledOnce).to.be.true;
-      done();
+      domain.emit('error', unhandlerError);
     });
   });
 
