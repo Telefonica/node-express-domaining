@@ -2,6 +2,11 @@
 
 Express middleware to automatically create and destroy a [domain](https://nodejs.org/api/domain.html).
 
+[READ THIS BEFORE USING THIS MODULE!](https://nodejs.org/api/domain.html#domain_domain)
+
+Allows you to respond to requests that had and unexpected error using your express error handlers and
+rethrows the exception to be captured by your own unhandledExcetion/cluster code
+
 [![npm version](https://badge.fury.io/js/express-domaining.svg)](http://badge.fury.io/js/express-domaining)
 [![Build Status](https://travis-ci.org/telefonica/node-express-domaining.svg)](https://travis-ci.org/telefonica/node-express-domaining)
 [![Coverage Status](https://img.shields.io/coveralls/telefonica/node-express-domaining.svg)](https://coveralls.io/r/telefonica/node-express-domaining)
@@ -20,19 +25,6 @@ var express = require('express'),
 
 var app = express();
 app.use(expressDomain());
-
-app.listen(3000);
-```
-
-By default, errors in domain are traced by `console.error`. However, you can use a custom logger:
-
-```js
-var express = require('express'),
-    expressDomain = require('express-domaining'),
-    logger = require('logops');
-
-var app = express();
-app.use(expressDomain(logger));
 
 app.listen(3000);
 ```
