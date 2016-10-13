@@ -5,7 +5,7 @@ Express middleware to automatically create and destroy a [domain](https://nodejs
 [READ THIS BEFORE USING THIS MODULE!](https://nodejs.org/api/domain.html#domain_domain)
 
 Allows you to respond to requests that had and unexpected error using your express error handlers and
-rethrows the exception to be captured by your own unhandledExcetion/cluster code
+signal the process with a 'SIGTERM' to be captured by your own process/cluster code
 
 [![npm version](https://badge.fury.io/js/express-domaining.svg)](http://badge.fury.io/js/express-domaining)
 [![Build Status](https://travis-ci.org/telefonica/node-express-domaining.svg)](https://travis-ci.org/telefonica/node-express-domaining)
